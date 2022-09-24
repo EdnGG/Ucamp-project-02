@@ -22,7 +22,8 @@ d.addEventListener("DOMContentLoaded", () => {
     console.log("DOM loaded");
     createInput();
     createTitle();
-    addTask();
+  addTask();
+  inputClicked();
   if (!localStorage.getItem("tasks")) {
     console.log("No tasks");
   } else {
@@ -38,6 +39,24 @@ const createInput = () => {
   container.appendChild(input);
   container.appendChild(buttonInput);
 };
+
+const inputClicked = () => {
+  input.addEventListener("keyup", () => {
+    let task = input.value;
+    if (task === "") {
+      return alert("You must write something!");
+    }
+
+    arrayOfTasks.push(task);
+    console.log("arrayOfTasks: ", arrayOfTasks);
+    input.value = "";
+
+  
+
+    saveToLocalStorage();
+    showTasks();
+  })
+}
 
 const addTask = () => {
   buttonInput.addEventListener("click", () => {
@@ -58,36 +77,51 @@ const addTask = () => {
 };
 
 const showTasks = () => {
-  arrayOfTasks.forEach((task) => {
-      divTasks.innerHTML += `
-        <div class="task">
+      divTasks.innerHTML = `
+        <div id="div__tasks">
+        ${arrayOfTasks.map((task) => { 
+          return `
           <div class="task__title">
-            <h2>${task}</h2>
-          </div>
+          <h2>${task}</h2>
           <div class="task__buttons">
-            <button class="task__buttons--edit">Edit</button>
-            <button class="task__buttons--delete">Delete</button>
+          <button class="task__buttons--edit" onclick = "updateFromLocalStorage(${task})">Edit</button>
+          <button class="task__buttons--delete" onclick = "deleteFromLocalStorage(${task})">Delete</button>
           </div>
         </div>
-      `;
+        `
+      }).join("")}
+      </div>
+       `
       secondaryDiv.appendChild(divTasks);
-  });  
-  
 };
+
+const clicked = () => {
+  console.log("clicked");
+}
+
 
 const saveToLocalStorage = () => {
   localStorage.setItem("tasks", JSON.stringify(arrayOfTasks));
 };
 
 const deleteFromLocalStorage = (task) => {
+  console.log('task deleted : ', task);
+
   let index = arrayOfTasks.indexOf(task);
+
+  console.log('index: ', index)
   arrayOfTasks.splice(index, 1);
   saveToLocalStorage();
+  showTasks();
 };
 
 const updateFromLocalStorage = (task) => {
+  console.log('task updated: ', task);
+  let newTask = prompt("Enter new task");
+
   let index = arrayOfTasks.indexOf(task);
-  arrayOfTasks[index] = task;
+  console.log('index: ', index)
+  arrayOfTasks[index] = newTask;
   saveToLocalStorage();
 };
 
