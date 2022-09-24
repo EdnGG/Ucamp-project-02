@@ -140,9 +140,9 @@ li{
   align-items: center;
   flex-direction: column;
   width: 96%;
-  height: 10vh;
+  height: 100%;
   padding: 20px;
-  margin: 20px;
+  margin: 40px;
   border-radius: 10px;
   /* background-color: darkcyan; */
 }
