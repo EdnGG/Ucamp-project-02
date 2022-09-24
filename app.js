@@ -7,7 +7,7 @@ let tasksList = "";
 let container = d.getElementById("container");
 let mainSection = d.getElementById("mainSection");
 let secondaryDiv = d.getElementById("secondaryDiv");
-let divTasks = d.getElementById("div__tasks");
+let divTasks = d.getElementById("div_tasks");
 
 // Creating elements
 let thirdDiv = d.createElement("div");
@@ -83,56 +83,50 @@ const addTask = () => {
 };
 
 const showTasks = () => {
-  divTasks.innerHTML = `
-        <div id="div__tasks">
-        ${arrayOfTasks
-          .map((task, i) => {
-            return `
-          <div class="task__title">
-          <h2>${task}</h2>
-          <div class="task__buttons">
-          <button class="task__buttons--edit" onclick = "updateFromLocalStorage(${task})">Edit</button>
-          <button class="task__buttons--delete" onclick = "deleteFromLocalStorage(${task , i})">Delete</button>
+  arrayOfTasks = JSON.parse(localStorage.getItem("tasks"));
+  let row = ''
+  arrayOfTasks.forEach((task, i) => {
+                row += `
+            <div class="task__title">
+            <h2>${task}</h2>
+            <div class="task__buttons">
+            <button class="task__buttons--edit" onclick = "updateFromLocalStorage(${i})">Edit</button>
+            <button class="task__buttons--delete" onclick = "deleteFromLocalStorage( ${i})">Delete</button>
+            </div>
           </div>
-        </div>
-        `;
-          })
-          .join("")
-        }
-      </div>
-       `;
-  secondaryDiv.appendChild(divTasks);
-};
+          
+         `
+  })
+            document.getElementById("secondaryDiv").innerHTML = row; 
+            // document.getElementById("div_tasks").innerHTML = row; 
+}
 
-const clicked = () => {
-  console.log("clicked");
-};
 
 const saveToLocalStorage = () => {
   localStorage.setItem("tasks", JSON.stringify(arrayOfTasks));
 };
 
-const deleteFromLocalStorage = (task ,i) => {
-  console.log("task deleted : ", task);
-  console.log("index deleted : ", i);
+const deleteFromLocalStorage = (i) => {
+  // traer lo que hay en LocaltS
+  const newArray = JSON.parse(localStorage.getItem("tasks"));
+  // Buscar el in dice y eliminarlo y crear un nuevo array
+  newArray.splice(i, 1);
+  // inserter el nuevo array en LS
+  localStorage.setItem("tasks", JSON.stringify(newArray));
+  // invocar la listade tareas 
+  showTasks();
 
-  // let index = arrayOfTasks.indexOf(task);
-
-  // console.log("index: ", index);
-  // arrayOfTasks.splice(index, 1);
-  // saveToLocalStorage();
-  // showTasks();
 };
 
-const updateFromLocalStorage = (task) => {
-  console.log("task updated: ", task);
-  let newTask = prompt("Enter new task");
-  console.log('newTask: ', newTask)
-  let index = arrayOfTasks.indexOf(task);
-  console.log("index: ", index);
-  arrayOfTasks[index] = newTask;
-  saveToLocalStorage();
-  showTasks();
+const updateFromLocalStorage = (i) => {
+   // traer lo que hay en LocaltS
+   const newArray = JSON.parse(localStorage.getItem("tasks"));
+   // Buscar el in dice y actualizarlo y crear un nuevo array
+    newArray[i] = prompt("Enter new task");
+   // inserter el nuevo array en LS
+   localStorage.setItem("tasks", JSON.stringify(newArray));
+   // invocar la listade tareas 
+   showTasks();
 };
 
 

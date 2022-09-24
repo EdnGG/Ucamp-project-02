@@ -82,7 +82,7 @@ li{
   cursor: pointer;
  }
 
-#div__tasks{
+#div_tasks{
   margin-top: 120px;
   display: flex;
   justify-content: center;
@@ -138,12 +138,13 @@ li{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   width: 96%;
   height: 10vh;
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
-  background-color: darkcyan;
+  /* background-color: darkcyan; */
 }
 #container{
   display: flex;
@@ -197,6 +198,6 @@ footer{
   #divContent{
     margin-top: 150px;
   }
-  
+
  
 }
