@@ -123,6 +123,7 @@ const updateFromLocalStorage = (task) => {
   console.log('index: ', index)
   arrayOfTasks[index] = newTask;
   saveToLocalStorage();
+  showTasks();
 };
 
 
